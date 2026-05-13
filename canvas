@@ -1,0 +1,79 @@
+XML 
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.canvas">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Canvas">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+  kotlin 
+  package com.example.canvas
+
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
+import android.graphics.drawable.shapes.RectShape
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ImageView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val bitmap: Bitmap = Bitmap.createBitmap(700, 1000, Bitmap.Config.ARGB_8888)
+        val canvas: Canvas = Canvas(bitmap)
+        var shapeDrawable: ShapeDrawable
+
+        // rectangle positions
+        val left = 100
+        val top = 100
+        val right = 600
+        val bottom = 400
+
+        // draw rectangle shape to canvas
+        shapeDrawable = ShapeDrawable(RectShape())
+        shapeDrawable.setBounds(left, top, right, bottom)
+        shapeDrawable.paint.color = Color.parseColor("#009944")
+        shapeDrawable.draw(canvas)
+
+        // draw oval shape to canvas
+        shapeDrawable = ShapeDrawable(OvalShape())
+        shapeDrawable.setBounds(100, 500, 600, 800)
+        shapeDrawable.paint.color = Color.parseColor("#009191")
+        shapeDrawable.draw(canvas)
+
+        // Integrated Circle logic
+        val pCircle = Paint()
+        pCircle.color = Color.BLACK
+        canvas.drawCircle(300f, 900f, 50f, pCircle) // Adjusted positions for visibility
+
+        // Integrated Background Rect logic
+        val pBackground = Paint()
+        pBackground.color = Color.RED
+        canvas.drawRect(450f, 450f, 500f, 500f, pBackground)
+
+        val iv = findViewById<ImageView>(R.id.imageV)
+        // set bitmap as background to ImageView
+        iv.background = BitmapDrawable(resources, bitmap)
+    }
+}
