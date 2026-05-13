@@ -1,0 +1,2912 @@
+
+# PROGRAM 1 – ACTIVITY LIFE CYCLE
+
+#TOPIC
+Android Activity Life Cycle
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity Life Cycle"
+        android:textSize="24sp"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.lifecycle
+
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        Toast.makeText(this,"onCreate",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(this,"onStart",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Toast.makeText(this,"onResume",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Toast.makeText(this,"onPause",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(this,"onStop",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(this,"onDestroy",Toast.LENGTH_SHORT).show()
+    }
+}
+```
+
+---
+
+# PROGRAM 2 – BUTTON + TEXTVIEW + EDITTEXT + TOAST
+
+#TOPIC
+Android Widgets
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Name"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+    <TextView
+        android:id="@+id/txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.widgets
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etName=findViewById<EditText>(R.id.etName)
+        val btn=findViewById<Button>(R.id.btn)
+        val txt=findViewById<TextView>(R.id.txt)
+
+        btn.setOnClickListener {
+
+            val name=etName.text.toString()
+
+            txt.text="Welcome $name"
+
+            Toast.makeText(this,"Button Clicked",Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 3 – AUTOCOMPLETE TEXTVIEW
+
+#TOPIC
+AutoCompleteTextView + Adapter
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Fruit"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.autocomplete
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val fruits=arrayOf(
+            "Apple",
+            "Banana",
+            "Mango",
+            "Orange"
+        )
+
+        val auto=findViewById<AutoCompleteTextView>(R.id.auto)
+
+        val adapter=ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            fruits
+        )
+
+        auto.setAdapter(adapter)
+    }
+}
+```
+
+---
+
+# PROGRAM 4 – DATE PICKER + TIME PICKER
+
+#TOPIC
+DatePicker and TimePicker
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.datetime
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.TimePicker
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val datePicker=findViewById<DatePicker>(R.id.datePicker)
+        val timePicker=findViewById<TimePicker>(R.id.timePicker)
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            val day=datePicker.dayOfMonth
+            val month=datePicker.month+1
+            val year=datePicker.year
+
+            val hour=timePicker.hour
+            val minute=timePicker.minute
+
+            Toast.makeText(
+                this,
+                "$day/$month/$year  $hour:$minute",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 5 – CHECKBOX + RADIOBUTTON + TOGGLEBUTTON
+
+#TOPIC
+Checkbox RadioButton ToggleButton
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <CheckBox
+        android:id="@+id/chkJava"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Java"/>
+
+    <CheckBox
+        android:id="@+id/chkKotlin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kotlin"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"/>
+
+        <RadioButton
+            android:id="@+id/rFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"/>
+
+    </RadioGroup>
+
+    <ToggleButton
+        android:id="@+id/toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.checkbox
+
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val chkJava=findViewById<CheckBox>(R.id.chkJava)
+        val chkKotlin=findViewById<CheckBox>(R.id.chkKotlin)
+        val radioGroup=findViewById<RadioGroup>(R.id.radioGroup)
+        val toggle=findViewById<ToggleButton>(R.id.toggle)
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            var result=""
+
+            if(chkJava.isChecked)
+                result += "Java "
+
+            if(chkKotlin.isChecked)
+                result += "Kotlin "
+
+            val selected=radioGroup.checkedRadioButtonId
+            val radio=findViewById<RadioButton>(selected)
+
+            result += radio.text.toString()
+
+            result += if(toggle.isChecked)
+                " ON"
+            else
+                " OFF"
+
+            Toast.makeText(this,result,Toast.LENGTH_LONG).show()
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 6 – ALERT DIALOG
+
+#TOPIC
+AlertDialog
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.alertdialog
+
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            val builder=AlertDialog.Builder(this)
+
+            builder.setTitle("Exit")
+            builder.setMessage("Are you sure?")
+
+            builder.setPositiveButton("Yes") { _, _ ->
+                finish()
+            }
+
+            builder.setNegativeButton("No",null)
+
+            builder.show()
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 7 – SPINNER
+
+#TOPIC
+Spinner + Adapter
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.spinner
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val spinner=findViewById<Spinner>(R.id.spinner)
+
+        val items=arrayOf(
+            "CSE",
+            "ISE",
+            "ECE"
+        )
+
+        val adapter=ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            items
+        )
+
+        spinner.adapter=adapter
+    }
+}
+```
+
+---
+
+# PROGRAM 8 – PROGRESS BAR
+
+#TOPIC
+ProgressBar
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:max="100"/>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.progressbar
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val progressBar=findViewById<ProgressBar>(R.id.progressBar)
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            progressBar.progress=75
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 9 – CANVAS DRAWING
+
+#TOPIC
+Canvas Drawing
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.canvas.MyView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+```
+
+#kotlin → MyView.kt
+
+```kotlin
+package com.example.canvas
+
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.view.View
+
+class MyView(context: Context): View(context) {
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        val paint=Paint()
+
+        paint.color=Color.RED
+        paint.strokeWidth=10f
+
+        canvas?.drawCircle(300f,300f,150f,paint)
+
+        paint.color=Color.BLUE
+
+        canvas?.drawRect(100f,600f,500f,900f,paint)
+    }
+}
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.canvas
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(MyView(this))
+    }
+}
+```
+
+---
+
+# PROGRAM 10 – ANDROID ANIMATION
+
+#TOPIC
+Animation
+
+#anim → res/anim/fade.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"/>
+```
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/ic_launcher"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.animation
+
+import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val imageView=findViewById<ImageView>(R.id.imageView)
+
+        val animation=
+            AnimationUtils.loadAnimation(this,R.anim.fade)
+
+        imageView.startAnimation(animation)
+    }
+}
+```
+
+---
+
+# PROGRAM 11 – EXPLICIT INTENT
+
+#TOPIC
+Explicit Intent
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next Activity"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.explicitintent
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            val intent=Intent(this,SecondActivity::class.java)
+
+            startActivity(intent)
+        }
+    }
+}
+```
+
+#xml → activity_second.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Second Activity"
+        android:textSize="24sp"/>
+
+</LinearLayout>
+```
+
+#kotlin → SecondActivity.kt
+
+```kotlin
+package com.example.explicitintent
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+    }
+}
+```
+
+#manifest → AndroidManifest.xml
+
+```xml
+<activity android:name=".SecondActivity"/>
+```
+
+---
+
+# PROGRAM 12 – IMPLICIT INTENT
+
+#TOPIC
+Implicit Intent
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Browser"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.implicitintent
+
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            val intent=Intent(Intent.ACTION_VIEW)
+
+            intent.data=Uri.parse("https://www.google.com")
+
+            startActivity(intent)
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 13 – OPTIONS MENU
+
+#TOPIC
+Options Menu
+
+#menu → res/menu/menu.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item1"
+        android:title="Settings"/>
+
+    <item
+        android:id="@+id/item2"
+        android:title="About"/>
+
+</menu>
+```
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.optionsmenu
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu,menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId)
+        {
+            R.id.item1 ->
+                Toast.makeText(this,"Settings",Toast.LENGTH_SHORT).show()
+
+            R.id.item2 ->
+                Toast.makeText(this,"About",Toast.LENGTH_SHORT).show()
+        }
+
+        return true
+    }
+}
+```
+
+---
+
+# PROGRAM 14 – CONTEXT MENU
+
+#TOPIC
+Context Menu
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:text="Long Press Me"
+    android:textSize="24sp"/>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.contextmenu
+
+import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val textView=findViewById<TextView>(R.id.textView)
+
+        registerForContextMenu(textView)
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        menu?.add(0,1,0,"Edit")
+        menu?.add(0,2,0,"Delete")
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId)
+        {
+            1 -> Toast.makeText(this,"Edit",Toast.LENGTH_SHORT).show()
+            2 -> Toast.makeText(this,"Delete",Toast.LENGTH_SHORT).show()
+        }
+
+        return true
+    }
+}
+```
+
+---
+
+# PROGRAM 15 – POPUP MENU
+
+#TOPIC
+Popup Menu
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Menu"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.popupmenu
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btn=findViewById<Button>(R.id.btn)
+
+        btn.setOnClickListener {
+
+            val popup=PopupMenu(this,btn)
+
+            popup.menu.add("Edit")
+            popup.menu.add("Delete")
+
+            popup.setOnMenuItemClickListener {
+
+                Toast.makeText(this,it.title,Toast.LENGTH_SHORT).show()
+
+                true
+            }
+
+            popup.show()
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 16 – SHARED PREFERENCES LOGIN
+
+#TOPIC
+SharedPreferences
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"/>
+
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"/>
+
+</LinearLayout>
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.sharedpreferences
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val user=findViewById<EditText>(R.id.user)
+        val pass=findViewById<EditText>(R.id.pass)
+        val save=findViewById<Button>(R.id.save)
+
+        val sp=getSharedPreferences("MyData", MODE_PRIVATE)
+
+        user.setText(sp.getString("username",""))
+        pass.setText(sp.getString("password",""))
+
+        save.setOnClickListener {
+
+            val editor=sp.edit()
+
+            editor.putString("username",user.text.toString())
+            editor.putString("password",pass.text.toString())
+
+            editor.apply()
+        }
+    }
+}
+```
+
+---
+
+# PROGRAM 17 – SQLITE DATABASE INSERT AND FETCH
+
+#TOPIC
+SQLite Database
+
+#xml → activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter ID"/>
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Name"/>
+
+    <Button
+        android:id="@+id/btnInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert"/>
+
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View"/>
+
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"/>
+
+</LinearLayout>
+```
+
+#kotlin → DBHelper.kt
+
+```kotlin
+package com.example.sqlite
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+class DBHelper(context: Context):
+    SQLiteOpenHelper(context,"StudentDB",null,1)
+{
+
+    override fun onCreate(db: SQLiteDatabase?) {
+
+        db?.execSQL(
+            "CREATE TABLE student(id INTEGER PRIMARY KEY,name TEXT)"
+        )
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+
+    }
+
+    fun insertData(id:Int,name:String)
+    {
+        val db=this.writableDatabase
+
+        val cv=ContentValues()
+
+        cv.put("id",id)
+        cv.put("name",name)
+
+        db.insert("student",null,cv)
+    }
+
+    fun getData(): String
+    {
+        val db=this.readableDatabase
+
+        val cursor=db.rawQuery("SELECT * FROM student",null)
+
+        var result=""
+
+        while(cursor.moveToNext())
+        {
+            result += cursor.getInt(0).toString()+" "
+            result += cursor.getString(1)+"\n"
+        }
+
+        return result
+    }
+}
+```
+
+#kotlin → MainActivity.kt
+
+```kotlin
+package com.example.sqlite
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etId=findViewById<EditText>(R.id.etId)
+        val etName=findViewById<EditText>(R.id.etName)
+        val btnInsert=findViewById<Button>(R.id.btnInsert)
+        val btnView=findViewById<Button>(R.id.btnView)
+        val txtResult=findViewById<TextView>(R.id.txtResult)
+
+        val db=DBHelper(this)
+
+        btnInsert.setOnClickListener {
+
+            db.insertData(
+                etId.text.toString().toInt(),
+                etName.text.toString()
+            )
+        }
+
+        btnView.setOnClickListener {
+
+            txtResult.text=db.getData()
+        }
+    }
+}
+
+
+
+
+====================================================
+1) AUTOCOMPLETE TEXTVIEW – FRUITS DROPDOWN
+====================================================
+
+STEP 1:
+Create a new Android Studio project
+Language: Kotlin
+
+STEP 2:
+Open:
+app > res > layout > activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoFruit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Fruit" />
+
+</LinearLayout>
+
+STEP 3:
+Open:
+MainActivity.kt
+
+Replace with:
+
+package com.example.fruitsapp
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val fruits = arrayOf(
+            "Apple",
+            "Banana",
+            "Orange",
+            "Mango",
+            "Grapes"
+        )
+
+        val autoFruit = findViewById<AutoCompleteTextView>(R.id.autoFruit)
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            fruits
+        )
+
+        autoFruit.setAdapter(adapter)
+        autoFruit.threshold = 1
+    }
+}
+
+====================================================
+2) USERNAME ACTIVITY → HOTEL LIST ACTIVITY
+====================================================
+
+STEP 1:
+Create new Android Studio project
+
+STEP 2:
+Create SECOND ACTIVITY
+
+Right click package name
+→ New
+→ Activity
+→ Empty Views Activity
+→ Name: SecondActivity
+
+Android Studio automatically creates:
+1. SecondActivity.kt
+2. activity_second.xml
+
+----------------------------------------------------
+activity_main.xml
+----------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Hotels"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+----------------------------------------------------
+activity_second.xml
+----------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listHotels"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+----------------------------------------------------
+MainActivity.kt
+----------------------------------------------------
+
+package com.example.hotelsapp
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etName = findViewById<EditText>(R.id.etName)
+        val btnNext = findViewById<Button>(R.id.btnNext)
+
+        btnNext.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("username", etName.text.toString())
+            startActivity(intent)
+        }
+    }
+}
+
+----------------------------------------------------
+SecondActivity.kt
+----------------------------------------------------
+
+package com.example.hotelsapp
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val hotels = arrayOf(
+            "Taj Hotel",
+            "Empire Restaurant",
+            "Sheraton",
+            "Udupi Garden"
+        )
+
+        val listHotels = findViewById<ListView>(R.id.listHotels)
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            hotels
+        )
+
+        listHotels.adapter = adapter
+    }
+}
+
+====================================================
+3) BOOK SHOPPING LIST BUILDER APP
+====================================================
+
+STEP 1:
+Create new Android Studio project
+
+STEP 2:
+Create SECOND ACTIVITY
+
+Right click package
+→ New
+→ Activity
+→ Empty Views Activity
+→ Name: SecondActivity
+
+Android Studio automatically creates:
+1. SecondActivity.kt
+2. activity_second.xml
+
+----------------------------------------------------
+activity_main.xml
+----------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView android:id="@+id/t1" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/t2" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/t3" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Item"/>
+
+</LinearLayout>
+</ScrollView>
+
+----------------------------------------------------
+activity_second.xml
+----------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/b1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Android Text Book"/>
+
+    <Button
+        android:id="@+id/b2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Operating Systems"/>
+
+</LinearLayout>
+
+----------------------------------------------------
+MainActivity.kt
+----------------------------------------------------
+
+package com.example.bookshop
+
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var textViews: Array<TextView>
+    var index = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        textViews = arrayOf(
+            findViewById(R.id.t1),
+            findViewById(R.id.t2),
+            findViewById(R.id.t3)
+        )
+
+        val btnAdd = findViewById<Button>(R.id.btnAdd)
+
+        btnAdd.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivityForResult(intent, 1)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val item = data?.getStringExtra("book")
+
+            if (index < textViews.size) {
+                textViews[index].text = item
+                index++
+            }
+        }
+    }
+}
+
+----------------------------------------------------
+SecondActivity.kt
+----------------------------------------------------
+
+package com.example.bookshop
+
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val b1 = findViewById<Button>(R.id.b1)
+        val b2 = findViewById<Button>(R.id.b2)
+
+        b1.setOnClickListener { sendData("Android Text Book") }
+        b2.setOnClickListener { sendData("Operating Systems") }
+    }
+
+    private fun sendData(book: String) {
+        val intent = Intent()
+        intent.putExtra("book", book)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+}
+========================================================
+1) BUTTON 1 SHOWS TOAST
+BUTTON 2 DISPLAYS WALLPAPER IMAGE
+========================================================
+
+STEP 1:
+Create New Project
+Language: Kotlin
+
+STEP 2:
+Open:
+app > res > layout > activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/btnToast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Toast"/>
+
+    <Button
+        android:id="@+id/btnImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Image"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/ic_launcher"/>
+
+</LinearLayout>
+
+STEP 3:
+Open MainActivity.kt
+
+Replace with:
+
+package com.example.wallpaperapp
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnToast = findViewById<Button>(R.id.btnToast)
+        val btnImage = findViewById<Button>(R.id.btnImage)
+        val imageView = findViewById<ImageView>(R.id.imageView)
+
+        btnToast.setOnClickListener {
+            Toast.makeText(this,"Hello User",Toast.LENGTH_SHORT).show()
+        }
+
+        btnImage.setOnClickListener {
+            imageView.visibility = View.VISIBLE
+        }
+    }
+}
+
+========================================================
+2) EVEN OR ODD NUMBER APP
+========================================================
+
+STEP 1:
+Create New Project
+Language: Kotlin
+
+STEP 2:
+Open:
+activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+STEP 3:
+Open MainActivity.kt
+
+Replace with:
+
+package com.example.evenoddapp
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etNumber = findViewById<EditText>(R.id.etNumber)
+        val btnCheck = findViewById<Button>(R.id.btnCheck)
+
+        btnCheck.setOnClickListener {
+
+            val num = etNumber.text.toString().toInt()
+
+            if(num % 2 == 0)
+                Toast.makeText(this,"Even Number",Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this,"Odd Number",Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+========================================================
+3) SCOREKEEPER APP USING SHARED PREFERENCES
+========================================================
+
+STEP 1:
+Create New Project
+Language: Kotlin
+
+STEP 2:
+Open:
+activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="40sp"/>
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Increase Score"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+STEP 3:
+Open MainActivity.kt
+
+Replace with:
+
+package com.example.scorekeeperapp
+
+import android.content.Context
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    var score = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val tvScore = findViewById<TextView>(R.id.tvScore)
+        val btnIncrease = findViewById<Button>(R.id.btnIncrease)
+
+        val sharedPreferences = getSharedPreferences("ScoreData", Context.MODE_PRIVATE)
+
+        score = sharedPreferences.getInt("score",0)
+
+        tvScore.text = score.toString()
+
+        btnIncrease.setOnClickListener {
+
+            score++
+
+            tvScore.text = score.toString()
+
+            val editor = sharedPreferences.edit()
+
+            editor.putInt("score",score)
+
+            editor.apply()
+        }
+    }
+}
+
+========================================================
+1) BUTTON 1 SHOWS TOAST
+BUTTON 2 DISPLAYS WALLPAPER IMAGE
+========================================================
+
+STEP 1:
+Create New Project
+Language: Kotlin
+
+STEP 2:
+Open:
+app > res > layout > activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/btnToast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Toast"/>
+
+    <Button
+        android:id="@+id/btnImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Image"
+        android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:src="@mipmap/ic_launcher"/>
+
+</LinearLayout>
+
+STEP 3:
+Open MainActivity.kt
+
+Replace with:
+
+package com.example.wallpaperapp
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnToast = findViewById<Button>(R.id.btnToast)
+        val btnImage = findViewById<Button>(R.id.btnImage)
+        val imageView = findViewById<ImageView>(R.id.imageView)
+
+        btnToast.setOnClickListener {
+            Toast.makeText(this,"Hello User",Toast.LENGTH_SHORT).show()
+        }
+
+        btnImage.setOnClickListener {
+            imageView.visibility = View.VISIBLE
+        }
+    }
+}
+
+========================================================
+2) EVEN OR ODD NUMBER APP
+========================================================
+
+STEP 1:
+Create New Project
+Language: Kotlin
+
+STEP 2:
+Open:
+activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+STEP 3:
+Open MainActivity.kt
+
+Replace with:
+
+package com.example.evenoddapp
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etNumber = findViewById<EditText>(R.id.etNumber)
+        val btnCheck = findViewById<Button>(R.id.btnCheck)
+
+        btnCheck.setOnClickListener {
+
+            val num = etNumber.text.toString().toInt()
+
+            if(num % 2 == 0)
+                Toast.makeText(this,"Even Number",Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this,"Odd Number",Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+========================================================
+3) SCOREKEEPER APP USING SHARED PREFERENCES
+========================================================
+
+STEP 1:
+Create New Project
+Language: Kotlin
+
+STEP 2:
+Open:
+activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="40sp"/>
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Increase Score"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+STEP 3:
+Open MainActivity.kt
+
+Replace with:
+
+package com.example.scorekeeperapp
+
+import android.content.Context
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    var score = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val tvScore = findViewById<TextView>(R.id.tvScore)
+        val btnIncrease = findViewById<Button>(R.id.btnIncrease)
+
+        val sharedPreferences = getSharedPreferences("ScoreData", Context.MODE_PRIVATE)
+
+        score = sharedPreferences.getInt("score",0)
+
+        tvScore.text = score.toString()
+
+        btnIncrease.setOnClickListener {
+
+            score++
+
+            tvScore.text = score.toString()
+
+            val editor = sharedPreferences.edit()
+
+            editor.putInt("score",score)
+
+            editor.apply()
+        }
+    }
+}
+
+
+ANDROID MENU PROGRAM USING MENUS
+
+STEP 1: Create New Project
+- Open Android Studio
+- New Project
+- Empty Views Activity
+- Language: Kotlin
+
+STEP 2: Create Menu Resource File
+
+Create:
+app > res > menu > menu_main.xml
+
+If menu folder not present:
+- right click res
+- New → Android Resource Directory
+- Resource type = menu
+
+menu_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/order"
+        android:title="Order" />
+
+    <item
+        android:id="@+id/status"
+        android:title="Status" />
+
+    <item
+        android:id="@+id/favorites"
+        android:title="Favorites" />
+
+    <item
+        android:id="@+id/contact"
+        android:title="Contact" />
+
+</menu>
+
+STEP 3: Open activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Droid Desserts"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</ScrollView>
+
+STEP 4: Open MainActivity.kt
+
+Replace with:
+
+package com.example.menuapp
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+
+            R.id.order ->
+                Toast.makeText(this,"Order Selected",Toast.LENGTH_SHORT).show()
+
+            R.id.status ->
+                Toast.makeText(this,"Status Selected",Toast.LENGTH_SHORT).show()
+
+            R.id.favorites ->
+                Toast.makeText(this,"Favorites Selected",Toast.LENGTH_SHORT).show()
+
+            R.id.contact ->
+                Toast.makeText(this,"Contact Selected",Toast.LENGTH_SHORT).show()
+        }
+
+        return true
+    }
+}
+
+ANDROID MAD LAB PROGRAMS
+
+========================================================
+1) AUTHENTICATION APP USING TWO ACTIVITIES
+========================================================
+
+STEP 1:
+Create New Android Studio Project
+Language: Kotlin
+
+STEP 2:
+Create Second Activity
+
+Right Click Package
+→ New
+→ Activity
+→ Empty Views Activity
+→ Name: SecondActivity
+
+--------------------------------------------------------
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Email"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+--------------------------------------------------------
+activity_second.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login Successful"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+--------------------------------------------------------
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.authapp
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+
+        btnLogin.setOnClickListener {
+            startActivity(Intent(this, SecondActivity::class.java))
+        }
+    }
+}
+
+========================================================
+2) USERNAME TO HOTEL LIST APP
+========================================================
+
+STEP 1:
+Create New Project
+
+STEP 2:
+Create Second Activity
+
+--------------------------------------------------------
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"/>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Hotels"/>
+
+</LinearLayout>
+
+--------------------------------------------------------
+activity_second.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listHotels"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+--------------------------------------------------------
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.hotelapp
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etName = findViewById<EditText>(R.id.etName)
+        val btnNext = findViewById<Button>(R.id.btnNext)
+
+        btnNext.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("username", etName.text.toString())
+            startActivity(intent)
+        }
+    }
+}
+
+--------------------------------------------------------
+SecondActivity.kt
+--------------------------------------------------------
+
+package com.example.hotelapp
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val hotels = arrayOf(
+            "Taj Hotel",
+            "Empire Restaurant",
+            "Sheraton",
+            "Udupi Garden"
+        )
+
+        val listHotels = findViewById<ListView>(R.id.listHotels)
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            hotels
+        )
+
+        listHotels.adapter = adapter
+    }
+}
+
+========================================================
+3) MENU PROGRAM
+========================================================
+
+STEP 1:
+Create menu resource file
+
+res → New → Android Resource Directory
+Resource Type = menu
+
+Create:
+menu_main.xml
+
+--------------------------------------------------------
+menu_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/red"
+        android:title="Red"/>
+
+    <item
+        android:id="@+id/green"
+        android:title="Green"/>
+
+</menu>
+
+--------------------------------------------------------
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.menuapp
+
+import android.graphics.Color
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var layout: LinearLayout
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        layout = LinearLayout(this)
+
+        layout.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+
+        setContentView(layout)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+
+            R.id.red -> layout.setBackgroundColor(Color.RED)
+
+            R.id.green -> layout.setBackgroundColor(Color.GREEN)
+        }
+
+        return true
+    }
+}
+
+========================================================
+4) HUNGRY TO HAPPY COOKIE APP
+========================================================
+
+STEP 1:
+Create New Project
+
+STEP 2:
+Open activity_main.xml
+
+Replace with:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I'm so hungry"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnEat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EAT COOKIE"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+--------------------------------------------------------
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.cookieapp
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val imageView = findViewById<ImageView>(R.id.imageView)
+        val textView = findViewById<TextView>(R.id.textView)
+        val btnEat = findViewById<Button>(R.id.btnEat)
+
+        btnEat.setOnClickListener {
+
+            imageView.setImageResource(R.mipmap.ic_launcher)
+
+            textView.text = "I'm so full"
+
+            btnEat.text = "DONE"
+        }
+    }
+}
+
+implement login and password using shared preferences, in the next run it should show the username and password
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+kot
+package com.example.sharedpreferencesapp
+
+import android.content.Context
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etUsername = findViewById<EditText>(R.id.etUsername)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val btnSave = findViewById<Button>(R.id.btnSave)
+
+        val sharedPreferences =
+            getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+
+        val savedUsername = sharedPreferences.getString("username", "")
+        val savedPassword = sharedPreferences.getString("password", "")
+
+        etUsername.setText(savedUsername)
+        etPassword.setText(savedPassword)
+
+        btnSave.setOnClickListener {
+
+            val username = etUsername.text.toString()
+            val password = etPassword.text.toString()
+
+            val editor = sharedPreferences.edit()
+
+            editor.putString("username", username)
+            editor.putString("password", password)
+
+            editor.apply()
+
+            Toast.makeText(this, "Data Saved", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+
+========================================================
+1) TWO BUTTONS DISPLAY WELCOME TEXT
+========================================================
+
+QUESTION:
+Create an application with two buttons named as Button1 and Button2 and also TextView with value displayed as Welcome.
+
+========================================================
+STEP 1
+========================================================
+
+Open Android Studio
+
+→ New Project
+→ Empty Views Activity
+→ Language = Kotlin
+→ Finish
+
+========================================================
+STEP 2
+========================================================
+
+Open:
+
+app > res > layout > activity_main.xml
+
+Delete everything and paste:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button1"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button2"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+========================================================
+STEP 3
+========================================================
+
+Open:
+
+app > kotlin+java > package name > MainActivity.kt
+
+Delete everything and paste:
+
+package com.example.myapplication
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val button1 = findViewById<Button>(R.id.button1)
+        val button2 = findViewById<Button>(R.id.button2)
+        val textView = findViewById<TextView>(R.id.textView)
+
+        button1.setOnClickListener {
+            textView.text = "Welcome from Button1"
+        }
+
+        button2.setOnClickListener {
+            textView.text = "Welcome from Button2"
+        }
+    }
+}
+
+========================================================
+OUTPUT
+========================================================
+
+When Button1 clicked:
+Welcome from Button1 displayed
+
+When Button2 clicked:
+Welcome from Button2 displayed
+
+========================================================
+2) COMPUTE TOTAL COST OF BOOKS USING RADIO BUTTONS
+========================================================
+
+QUESTION:
+Create App to compute total cost including books in bookstore. If the cost exceeds Rs 5000 use CheckBox to display the 10% discount from total cost else give discount of 5%. Use RadioButton to display red color if total cost exceeds 5000 else green.
+
+========================================================
+STEP 1
+========================================================
+
+Create New Project
+Language = Kotlin
+
+========================================================
+STEP 2
+========================================================
+
+Open:
+
+app > res > layout > activity_main.xml
+
+Delete everything and paste:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etCost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Total Cost"
+        android:inputType="number"/>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply Discount"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbRed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Red"/>
+
+        <RadioButton
+            android:id="@+id/rbGreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Green"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
+
+========================================================
+STEP 3
+========================================================
+
+Open:
+
+MainActivity.kt
+
+Delete everything and paste:
+
+package com.example.myapplication
+
+import android.graphics.Color
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etCost = findViewById<EditText>(R.id.etCost)
+        val checkBox = findViewById<CheckBox>(R.id.checkBox)
+        val rbRed = findViewById<RadioButton>(R.id.rbRed)
+        val rbGreen = findViewById<RadioButton>(R.id.rbGreen)
+        val btnCalculate = findViewById<Button>(R.id.btnCalculate)
+        val tvResult = findViewById<TextView>(R.id.tvResult)
+
+        btnCalculate.setOnClickListener {
+
+            var cost = etCost.text.toString().toDouble()
+
+            if(checkBox.isChecked){
+
+                if(cost > 5000){
+                    cost = cost - (cost * 0.10)
+
+                    rbRed.isChecked = true
+
+                    tvResult.setTextColor(Color.RED)
+                }
+                else{
+                    cost = cost - (cost * 0.05)
+
+                    rbGreen.isChecked = true
+
+                    tvResult.setTextColor(Color.GREEN)
+                }
+            }
+
+            tvResult.text = "Final Cost = Rs $cost"
+        }
+    }
+}
+
+========================================================
+OUTPUT
+========================================================
+
+If amount > 5000:
+- 10% discount applied
+- Red selected
+
+Else:
+- 5% discount applied
+- Green selected
