@@ -1,0 +1,3030 @@
+
+========================================================
+1) BUTTON AND TEXTVIEW
+========================================================
+Question:
+Create an Android application to demonstrate Button and TextView.
+When the user clicks the button, display “Welcome to Android”
+in the TextView.
+
+activity_main.xml
+--------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello"
+        android:textSize="24sp"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val tv = findViewById<TextView>(R.id.textView)
+        val btn = findViewById<Button>(R.id.button)
+
+        btn.setOnClickListener {
+            tv.text = "Welcome to Android"
+        }
+    }
+}
+
+========================================================
+2) EDITTEXT AND TOAST
+========================================================
+Question:
+Create an Android application using EditText and Toast.
+Accept username from the user and display it using Toast
+message on button click.
+
+activity_main.xml
+--------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val et = findViewById<EditText>(R.id.editText)
+        val btn = findViewById<Button>(R.id.button)
+
+        btn.setOnClickListener {
+            Toast.makeText(this, et.text.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+========================================================
+3) AUTOCOMPLETE TEXTVIEW
+========================================================
+activity_main.xml
+--------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Fruit"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val fruits = arrayOf("Apple","Banana","Orange","Mango")
+        val auto = findViewById<AutoCompleteTextView>(R.id.autoText)
+
+        val adapter = ArrayAdapter(this,
+            android.R.layout.simple_list_item_1, fruits)
+
+        auto.setAdapter(adapter)
+        auto.threshold = 1
+    }
+}
+
+========================================================
+4) DATEPICKER AND TIMEPICKER
+========================================================
+
+Question:
+Create an Android application using DatePicker and TimePicker
+to select date and time and display the selected values in TextView.
+
+Steps:
+1. Open Android Studio Dolphin 2021.3.1
+2. Create Empty Views Activity project
+3. Open activity_main.xml
+4. Add DatePicker, TimePicker, Button and TextView
+5. Open MainActivity.kt
+6. Write code to fetch selected date and time
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"/>
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Date & Time"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val datePicker = findViewById<DatePicker>(R.id.datePicker)
+        val timePicker = findViewById<TimePicker>(R.id.timePicker)
+        val btn = findViewById<Button>(R.id.btnShow)
+        val tv = findViewById<TextView>(R.id.tvResult)
+
+        btn.setOnClickListener {
+
+            val day = datePicker.dayOfMonth
+            val month = datePicker.month + 1
+            val year = datePicker.year
+
+            val hour = timePicker.hour
+            val minute = timePicker.minute
+
+            tv.text = "Date: $day/$month/$year\nTime: $hour:$minute"
+        }
+    }
+}
+
+========================================================
+5) TOGGLEBUTTON
+========================================================
+
+Question:
+Create an Android application using ToggleButton to switch
+between ON and OFF states and display the current status
+using Toast.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add ToggleButton
+4. Open MainActivity.kt
+5. Write listener code for ToggleButton
+6. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="ON"
+        android:textOff="OFF"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val toggle = findViewById<ToggleButton>(R.id.toggleButton)
+
+        toggle.setOnCheckedChangeListener { _, isChecked ->
+
+            if (isChecked) {
+                Toast.makeText(this, "Toggle is ON", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Toggle is OFF", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}
+
+========================================================
+6) CHECKBOX AND RADIOBUTTON
+========================================================
+
+Question:
+Create an Android application using CheckBox and RadioButton.
+Use CheckBox to select hobbies and RadioButton to select gender.
+Display selected values using Toast.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add CheckBoxes, RadioButtons, Button
+4. Open MainActivity.kt
+5. Write code to fetch selected hobbies and gender
+6. Display result using Toast
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Hobbies"
+        android:textSize="20sp"/>
+
+    <CheckBox
+        android:id="@+id/cbMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Music"/>
+
+    <CheckBox
+        android:id="@+id/cbSports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sports"/>
+
+    <CheckBox
+        android:id="@+id/cbReading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reading"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Gender"
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"/>
+
+        <RadioButton
+            android:id="@+id/rbFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val cbMusic = findViewById<CheckBox>(R.id.cbMusic)
+        val cbSports = findViewById<CheckBox>(R.id.cbSports)
+        val cbReading = findViewById<CheckBox>(R.id.cbReading)
+
+        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+
+        val btn = findViewById<Button>(R.id.btnSubmit)
+
+        btn.setOnClickListener {
+
+            var hobbies = ""
+
+            if (cbMusic.isChecked)
+                hobbies += "Music "
+
+            if (cbSports.isChecked)
+                hobbies += "Sports "
+
+            if (cbReading.isChecked)
+                hobbies += "Reading "
+
+            val selectedGenderId = radioGroup.checkedRadioButtonId
+
+            val genderRadio = findViewById<RadioButton>(selectedGenderId)
+
+            val gender = genderRadio.text.toString()
+
+            Toast.makeText(
+                this,
+                "Hobbies: $hobbies\nGender: $gender",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+}
+
+========================================================
+7) SPINNER
+========================================================
+
+Question:
+Create an Android application using Spinner to display a list
+of countries. Display the selected country in a TextView.
+
+Steps:
+1. Open Android Studio Dolphin 2021.3.1
+2. Create Empty Views Activity
+3. Open activity_main.xml
+4. Add Spinner and TextView
+5. Open MainActivity.kt
+6. Create array of countries
+7. Use ArrayAdapter with Spinner
+8. Display selected country in TextView
+9. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Spinner
+        android:id="@+id/spinnerCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val spinner = findViewById<Spinner>(R.id.spinnerCountry)
+        val tv = findViewById<TextView>(R.id.tvCountry)
+
+        val countries = arrayOf(
+            "India",
+            "USA",
+            "Canada",
+            "Australia",
+            "Japan"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            countries
+        )
+
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    tv.text = "Selected Country: " + countries[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+            }
+    }
+}
+
+========================================================
+8) PROGRESSBAR
+========================================================
+
+Question:
+Create an Android application using ProgressBar.
+On clicking a button, show the ProgressBar loading
+from 0 to 100.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add ProgressBar, Button and TextView
+4. Open MainActivity.kt
+5. Write thread code to increase progress
+6. Display progress percentage
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:max="100"/>
+
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Loading"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Handler
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    var progressStatus = 0
+    lateinit var progressBar: ProgressBar
+    lateinit var tv: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        progressBar = findViewById(R.id.progressBar)
+        tv = findViewById(R.id.tvProgress)
+
+        val btn = findViewById<Button>(R.id.btnLoad)
+
+        btn.setOnClickListener {
+
+            Thread {
+
+                while (progressStatus < 100) {
+
+                    progressStatus += 1
+
+                    Thread.sleep(50)
+
+                    runOnUiThread {
+                        progressBar.progress = progressStatus
+                        tv.text = "$progressStatus%"
+                    }
+                }
+
+            }.start()
+        }
+    }
+}
+
+========================================================
+9) EXPLICIT INTENT
+========================================================
+
+Question:
+Create an Android application using Explicit Intent.
+The first activity should accept username and move to
+second activity which displays a welcome message.
+
+Steps:
+1. Create Empty Views Activity
+2. Create second activity
+3. Open activity_main.xml
+4. Add EditText and Button
+5. Open MainActivity.kt
+6. Pass username using Intent
+7. Open second activity and display welcome message
+8. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"/>
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val et = findViewById<EditText>(R.id.etName)
+        val btn = findViewById<Button>(R.id.btnNext)
+
+        btn.setOnClickListener {
+
+            val intent = Intent(this, SecondActivity::class.java)
+
+            intent.putExtra("username", et.text.toString())
+
+            startActivity(intent)
+        }
+    }
+}
+
+activity_second.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"/>
+</LinearLayout>
+
+SecondActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val tv = findViewById<TextView>(R.id.tvWelcome)
+
+        val name = intent.getStringExtra("username")
+
+        tv.text = "Welcome $name"
+    }
+}
+
+AndroidManifest.xml
+--------------------------------------------------------
+========================================================
+10) IMPLICIT INTENT
+========================================================
+
+Question:
+Create an Android application using Implicit Intent.
+Use buttons to:
+- Open a website
+- Open dial pad
+- Open email application
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add 3 buttons
+4. Open MainActivity.kt
+5. Write implicit intent code
+6. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Button
+        android:id="@+id/btnWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Website"/>
+
+    <Button
+        android:id="@+id/btnDial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Dial Pad"/>
+
+    <Button
+        android:id="@+id/btnEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open Email"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.Intent
+import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btnWebsite = findViewById<Button>(R.id.btnWebsite)
+        val btnDial = findViewById<Button>(R.id.btnDial)
+        val btnEmail = findViewById<Button>(R.id.btnEmail)
+
+        btnWebsite.setOnClickListener {
+
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.google.com")
+            )
+
+            startActivity(intent)
+        }
+
+        btnDial.setOnClickListener {
+
+            val intent = Intent(
+                Intent.ACTION_DIAL,
+                Uri.parse("tel:9876543210")
+            )
+
+            startActivity(intent)
+        }
+
+        btnEmail.setOnClickListener {
+
+            val intent = Intent(Intent.ACTION_SEND)
+
+            intent.type = "message/rfc822"
+
+            intent.putExtra(
+                Intent.EXTRA_EMAIL,
+                arrayOf("test@gmail.com")
+            )
+
+            intent.putExtra(
+                Intent.EXTRA_SUBJECT,
+                "Android Email"
+            )
+
+            intent.putExtra(
+                Intent.EXTRA_TEXT,
+                "Hello from Android"
+            )
+
+            startActivity(intent)
+        }
+    }
+}
+
+========================================================
+11) ANDROID MENUS
+========================================================
+
+Question:
+Create an Android application to demonstrate Android Menus:
+- Options Menu
+- Context Menu
+- Popup Menu
+Display Toast message for selected menu item.
+
+Steps:
+1. Create Empty Views Activity
+2. Add buttons in XML
+3. Create menu XML files
+4. Open MainActivity.kt
+5. Write menu functions
+6. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnContext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Context Menu"/>
+
+    <Button
+        android:id="@+id/btnPopup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Popup Menu"/>
+</LinearLayout>
+
+res/menu/options_menu.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item1"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/item2"
+        android:title="Settings"/>
+</menu>
+
+res/menu/popup_menu.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/p1"
+        android:title="Edit"/>
+
+    <item
+        android:id="@+id/p2"
+        android:title="Delete"/>
+</menu>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.*
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var btnContext: Button
+    lateinit var btnPopup: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        btnContext = findViewById(R.id.btnContext)
+        btnPopup = findViewById(R.id.btnPopup)
+
+        registerForContextMenu(btnContext)
+
+        btnPopup.setOnClickListener {
+
+            val popup = PopupMenu(this, btnPopup)
+
+            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+
+            popup.setOnMenuItemClickListener {
+
+                Toast.makeText(
+                    this,
+                    it.title,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                true
+            }
+
+            popup.show()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        Toast.makeText(
+            this,
+            item.title,
+            Toast.LENGTH_SHORT
+        ).show()
+
+        return true
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        menu?.add("Copy")
+        menu?.add("Paste")
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+
+        Toast.makeText(
+            this,
+            item.title,
+            Toast.LENGTH_SHORT
+        ).show()
+
+        return true
+    }
+}
+
+========================================================
+13) CUSTOM TOAST
+========================================================
+
+Question:
+Create an Android application using Custom Toast.
+Display a custom-designed Toast with image and text
+when the button is clicked.
+
+Steps:
+1. Create Empty Views Activity
+2. Create custom toast layout
+3. Add image and text
+4. Open MainActivity.kt
+5. Inflate custom layout
+6. Display Toast
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnToast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Toast"/>
+</LinearLayout>
+
+toast_layout.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="#DDDDDD">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Custom Toast"
+        android:textSize="20sp"
+        android:padding="10dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btn = findViewById<Button>(R.id.btnToast)
+
+        btn.setOnClickListener {
+
+            val layout = LayoutInflater.from(this)
+                .inflate(R.layout.toast_layout, null)
+
+            val toast = Toast(this)
+
+            toast.duration = Toast.LENGTH_SHORT
+
+            toast.view = layout
+
+            toast.show()
+        }
+    }
+}
+
+========================================================
+14) CUSTOM CHECKBOX
+========================================================
+
+Question:
+Create an Android application using Custom CheckBox.
+Display different food items with custom colors/icons
+and show selected items in TextView.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add CheckBoxes and TextView
+4. Open MainActivity.kt
+5. Write code to display selected foods
+6. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <CheckBox
+        android:id="@+id/cbPizza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pizza"
+        android:textColor="#FF0000"/>
+
+    <CheckBox
+        android:id="@+id/cbBurger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Burger"
+        android:textColor="#0000FF"/>
+
+    <CheckBox
+        android:id="@+id/cbPasta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pasta"
+        android:textColor="#008000"/>
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Selected"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val pizza = findViewById<CheckBox>(R.id.cbPizza)
+        val burger = findViewById<CheckBox>(R.id.cbBurger)
+        val pasta = findViewById<CheckBox>(R.id.cbPasta)
+
+        val btn = findViewById<Button>(R.id.btnShow)
+
+        val tv = findViewById<TextView>(R.id.tvResult)
+
+        btn.setOnClickListener {
+
+            var result = "Selected Foods: "
+
+            if (pizza.isChecked)
+                result += "Pizza "
+
+            if (burger.isChecked)
+                result += "Burger "
+
+            if (pasta.isChecked)
+                result += "Pasta "
+
+            tv.text = result
+        }
+    }
+}
+
+========================================================
+15) CUSTOM RADIOBUTTON
+========================================================
+
+Question:
+Create an Android application using Custom RadioButton.
+Allow users to select payment method (UPI, Card, Cash)
+with customized RadioButtons and display selected option.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add RadioGroup and RadioButtons
+4. Add Button and TextView
+5. Open MainActivity.kt
+6. Write code to display selected payment method
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbUPI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UPI"
+            android:textColor="#FF0000"/>
+
+        <RadioButton
+            android:id="@+id/rbCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Card"
+            android:textColor="#0000FF"/>
+
+        <RadioButton
+            android:id="@+id/rbCash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cash"
+            android:textColor="#008000"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Selected"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        val btn = findViewById<Button>(R.id.btnShow)
+        val tv = findViewById<TextView>(R.id.tvResult)
+
+        btn.setOnClickListener {
+
+            val selectedId = radioGroup.checkedRadioButtonId
+
+            val radioButton = findViewById<RadioButton>(selectedId)
+
+            tv.text = "Selected Payment Method: " +
+                    radioButton.text.toString()
+        }
+    }
+}
+
+========================================================
+16) ALERTDIALOG
+========================================================
+
+Question:
+Create an Android application using AlertDialog.
+When the user clicks Exit button, display an AlertDialog
+asking “Do you want to exit?” with YES and NO buttons.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add Exit button
+4. Open MainActivity.kt
+5. Write AlertDialog code
+6. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val btn = findViewById<Button>(R.id.btnExit)
+
+        btn.setOnClickListener {
+
+            val builder = AlertDialog.Builder(this)
+
+            builder.setTitle("Exit")
+
+            builder.setMessage("Do you want to exit?")
+
+            builder.setPositiveButton("YES") { _, _ ->
+                finish()
+            }
+
+            builder.setNegativeButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            builder.show()
+        }
+    }
+}
+
+========================================================
+17) ARRAY ADAPTER
+========================================================
+
+Question:
+Create an Android application using Adapter and ListView.
+Display a list of programming languages using ArrayAdapter.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add ListView
+4. Open MainActivity.kt
+5. Create array of programming languages
+6. Use ArrayAdapter with ListView
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val listView = findViewById<ListView>(R.id.listView)
+
+        val languages = arrayOf(
+            "Java",
+            "Python",
+            "Kotlin",
+            "C",
+            "C++",
+            "JavaScript"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            languages
+        )
+
+        listView.adapter = adapter
+    }
+}
+
+========================================================
+18) CUSTOM ADAPTER
+========================================================
+
+Question:
+Create an Android application using Custom Adapter.
+Display student details with image, name, and USN
+in a ListView.
+
+Steps:
+1. Create Empty Views Activity
+2. Create row layout XML
+3. Add ListView in activity_main.xml
+4. Create custom adapter class
+5. Add images in drawable folder
+6. Open MainActivity.kt
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+
+student_row.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvUSN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
+
+Student.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+data class Student(
+    val image: Int,
+    val name: String,
+    val usn: String
+)
+
+StudentAdapter.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
+import android.widget.ArrayAdapter
+
+class StudentAdapter(
+    context: Context,
+    var students: ArrayList<Student>
+) : ArrayAdapter<Student>(context, 0, students) {
+
+    override fun getView(
+        position: Int,
+        convertView: View?,
+        parent: ViewGroup
+    ): View {
+
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.student_row, parent, false)
+
+        val image = view.findViewById<ImageView>(R.id.imageView)
+        val name = view.findViewById<TextView>(R.id.tvName)
+        val usn = view.findViewById<TextView>(R.id.tvUSN)
+
+        val student = students[position]
+
+        image.setImageResource(student.image)
+        name.text = student.name
+        usn.text = student.usn
+
+        return view
+    }
+}
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ListView
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val listView = findViewById<ListView>(R.id.listView)
+
+        val students = arrayListOf(
+
+            Student(
+                R.mipmap.ic_launcher,
+                "Anshika",
+                "1BM23IS001"
+            ),
+
+            Student(
+                R.mipmap.ic_launcher,
+                "Rahul",
+                "1BM23IS002"
+            ),
+
+            Student(
+                R.mipmap.ic_launcher,
+                "Sneha",
+                "1BM23IS003"
+            )
+        )
+
+        val adapter = StudentAdapter(this, students)
+
+        listView.adapter = adapter
+    }
+}
+
+========================================================
+19) CANVAS DRAWING
+========================================================
+
+Question:
+Create an Android application to draw custom shapes on Canvas.
+Draw a circle, rectangle, and line on the screen using Paint class.
+
+Steps:
+1. Open Android Studio Dolphin 2021.3.1
+2. Create Empty Views Activity
+3. Create a custom class named MyCanvas.kt
+4. Override onDraw() method
+5. Use Paint class to draw shapes
+6. Set custom view in MainActivity
+7. Run the application
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val myCanvas = MyCanvas(this)
+
+        setContentView(myCanvas)
+    }
+}
+
+MyCanvas.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.Context
+import android.graphics.*
+import android.view.View
+
+class MyCanvas(context: Context) : View(context) {
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
+        val paint = Paint()
+
+        paint.color = Color.RED
+        paint.strokeWidth = 8f
+        paint.style = Paint.Style.FILL
+
+        canvas.drawCircle(300f, 300f, 150f, paint)
+
+        paint.color = Color.BLUE
+        paint.style = Paint.Style.STROKE
+
+        canvas.drawRect(100f, 500f, 500f, 800f, paint)
+
+        paint.color = Color.GREEN
+        paint.strokeWidth = 10f
+
+        canvas.drawLine(100f, 900f, 700f, 900f, paint)
+    }
+}
+
+========================================================
+20) ANDROID ANIMATION
+========================================================
+
+Question:
+Create an Android application using Animation.
+Apply fade-in, zoom-in, or rotate animation to an ImageView
+when button is clicked.
+
+Steps:
+1. Open Android Studio Dolphin 2021.3.1
+2. Create Empty Views Activity
+3. Open activity_main.xml
+4. Add ImageView and Buttons
+5. Create anim resource folder
+6. Create animation XML files:
+   - fade.xml
+   - zoom.xml
+   - rotate.xml
+7. Open MainActivity.kt
+8. Load animation using AnimationUtils
+9. Apply animation to ImageView on button click
+10. Run the application
+
+Important Steps for Animation Folder:
+--------------------------------------------------------
+1. Right click res folder
+2. Select New -> Android Resource Directory
+3. Resource type = anim
+4. Click OK
+5. Inside anim folder create:
+   - fade.xml
+   - zoom.xml
+   - rotate.xml
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnFade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fade Animation"/>
+
+    <Button
+        android:id="@+id/btnZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zoom Animation"/>
+
+    <Button
+        android:id="@+id/btnRotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotate Animation"/>
+</LinearLayout>
+
+res/anim/fade.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"/>
+
+res/anim/zoom.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromXScale="0.2"
+    android:fromYScale="0.2"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toXScale="1.0"
+    android:toYScale="1.0"/>
+
+res/anim/rotate.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromDegrees="0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:toDegrees="360"/>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.ImageView
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var imageView: ImageView
+    lateinit var fadeAnimation: Animation
+    lateinit var zoomAnimation: Animation
+    lateinit var rotateAnimation: Animation
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        imageView = findViewById(R.id.imageView)
+
+        val btnFade = findViewById<Button>(R.id.btnFade)
+        val btnZoom = findViewById<Button>(R.id.btnZoom)
+        val btnRotate = findViewById<Button>(R.id.btnRotate)
+
+        fadeAnimation =
+            AnimationUtils.loadAnimation(this, R.anim.fade)
+
+        zoomAnimation =
+            AnimationUtils.loadAnimation(this, R.anim.zoom)
+
+        rotateAnimation =
+            AnimationUtils.loadAnimation(this, R.anim.rotate)
+
+        btnFade.setOnClickListener {
+
+            imageView.startAnimation(fadeAnimation)
+        }
+
+        btnZoom.setOnClickListener {
+
+            imageView.startAnimation(zoomAnimation)
+        }
+
+        btnRotate.setOnClickListener {
+
+            imageView.startAnimation(rotateAnimation)
+        }
+    }
+}
+
+Expected Output:
+--------------------------------------------------------
+1. Fade button -> Image fades in
+2. Zoom button -> Image zooms in
+3. Rotate button -> Image rotates 360 degrees
+
+========================================================
+21) SQLITE INSERT AND VIEW
+========================================================
+
+Question:
+Create an Android application using SQLite database.
+Insert student details into database and display all records
+using ListView.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add EditTexts, Buttons and ListView
+4. Create DatabaseHelper.kt
+5. Create SQLite database and table
+6. Insert student details
+7. Display records using ListView
+8. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Name"/>
+
+    <EditText
+        android:id="@+id/etUSN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter USN"/>
+
+    <Button
+        android:id="@+id/btnInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+
+DatabaseHelper.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+class DatabaseHelper(context: Context) :
+    SQLiteOpenHelper(context, "StudentDB", null, 1) {
+
+    override fun onCreate(db: SQLiteDatabase) {
+
+        db.execSQL(
+            "CREATE TABLE student(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, usn TEXT)"
+        )
+    }
+
+    override fun onUpgrade(
+        db: SQLiteDatabase,
+        oldVersion: Int,
+        newVersion: Int
+    ) {
+
+    }
+
+    fun insertStudent(name: String, usn: String) {
+
+        val db = writableDatabase
+
+        val values = ContentValues()
+
+        values.put("name", name)
+        values.put("usn", usn)
+
+        db.insert("student", null, values)
+
+        db.close()
+    }
+
+    fun getAllStudents(): ArrayList<String> {
+
+        val list = ArrayList<String>()
+
+        val db = readableDatabase
+
+        val cursor = db.rawQuery(
+            "SELECT * FROM student",
+            null
+        )
+
+        while (cursor.moveToNext()) {
+
+            list.add(
+                cursor.getString(1) + " - " +
+                        cursor.getString(2)
+            )
+        }
+
+        cursor.close()
+
+        return list
+    }
+}
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var db: DatabaseHelper
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        db = DatabaseHelper(this)
+
+        val etName = findViewById<EditText>(R.id.etName)
+        val etUSN = findViewById<EditText>(R.id.etUSN)
+
+        val btnInsert = findViewById<Button>(R.id.btnInsert)
+
+        val listView = findViewById<ListView>(R.id.listView)
+
+        btnInsert.setOnClickListener {
+
+            db.insertStudent(
+                etName.text.toString(),
+                etUSN.text.toString()
+            )
+
+            Toast.makeText(
+                this,
+                "Inserted Successfully",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            val list = db.getAllStudents()
+
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                list
+            )
+
+            listView.adapter = adapter
+        }
+    }
+}
+
+========================================================
+22) SQLITE CRUD OPERATIONS
+========================================================
+
+Question:
+Create an Android application using SQLite database with operations:
+- Insert
+- Update
+- Delete
+- View
+for employee records.
+
+Steps:
+1. Open Android Studio Dolphin 2021.3.1
+2. Create Empty Views Activity
+3. Open activity_main.xml
+4. Add EditTexts, Buttons and ListView
+5. Create DatabaseHelper.kt
+6. Create SQLite database and employee table
+7. Write Insert, Update, Delete and View methods
+8. Open MainActivity.kt
+9. Connect buttons with database methods
+10. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Employee ID"/>
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Employee Name"/>
+
+    <Button
+        android:id="@+id/btnInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert"/>
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"/>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"/>
+
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+
+DatabaseHelper.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+class DatabaseHelper(context: Context) :
+    SQLiteOpenHelper(context, "EmployeeDB", null, 1) {
+
+    override fun onCreate(db: SQLiteDatabase) {
+
+        db.execSQL(
+            "CREATE TABLE employee(id TEXT PRIMARY KEY, name TEXT)"
+        )
+    }
+
+    override fun onUpgrade(
+        db: SQLiteDatabase,
+        oldVersion: Int,
+        newVersion: Int
+    ) {
+
+    }
+
+    fun insertEmployee(id: String, name: String) {
+
+        val db = writableDatabase
+
+        val values = ContentValues()
+
+        values.put("id", id)
+        values.put("name", name)
+
+        db.insert("employee", null, values)
+
+        db.close()
+    }
+
+    fun updateEmployee(id: String, name: String) {
+
+        val db = writableDatabase
+
+        val values = ContentValues()
+
+        values.put("name", name)
+
+        db.update(
+            "employee",
+            values,
+            "id=?",
+            arrayOf(id)
+        )
+
+        db.close()
+    }
+
+    fun deleteEmployee(id: String) {
+
+        val db = writableDatabase
+
+        db.delete(
+            "employee",
+            "id=?",
+            arrayOf(id)
+        )
+
+        db.close()
+    }
+
+    fun viewEmployees(): ArrayList<String> {
+
+        val list = ArrayList<String>()
+
+        val db = readableDatabase
+
+        val cursor = db.rawQuery(
+            "SELECT * FROM employee",
+            null
+        )
+
+        while (cursor.moveToNext()) {
+
+            list.add(
+                cursor.getString(0) + " - " +
+                        cursor.getString(1)
+            )
+        }
+
+        cursor.close()
+
+        return list
+    }
+}
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var db: DatabaseHelper
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        db = DatabaseHelper(this)
+
+        val etId = findViewById<EditText>(R.id.etId)
+        val etName = findViewById<EditText>(R.id.etName)
+
+        val btnInsert = findViewById<Button>(R.id.btnInsert)
+        val btnUpdate = findViewById<Button>(R.id.btnUpdate)
+        val btnDelete = findViewById<Button>(R.id.btnDelete)
+        val btnView = findViewById<Button>(R.id.btnView)
+
+        val listView = findViewById<ListView>(R.id.listView)
+
+        btnInsert.setOnClickListener {
+
+            db.insertEmployee(
+                etId.text.toString(),
+                etName.text.toString()
+            )
+
+            Toast.makeText(
+                this,
+                "Inserted",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        btnUpdate.setOnClickListener {
+
+            db.updateEmployee(
+                etId.text.toString(),
+                etName.text.toString()
+            )
+
+            Toast.makeText(
+                this,
+                "Updated",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        btnDelete.setOnClickListener {
+
+            db.deleteEmployee(
+                etId.text.toString()
+            )
+
+            Toast.makeText(
+                this,
+                "Deleted",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        btnView.setOnClickListener {
+
+            val list = db.viewEmployees()
+
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                list
+            )
+
+            listView.adapter = adapter
+        }
+    }
+}
+
+========================================================
+23) SHARED PREFERENCES THEME APP
+========================================================
+
+Question:
+Create an Android application using SharedPreferences
+to store theme settings (Dark Mode / Light Mode).
+Restore the selected theme when app opens again.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add Switch and TextView
+4. Open MainActivity.kt
+5. Use SharedPreferences to save theme
+6. Restore theme when app reopens
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Switch
+        android:id="@+id/themeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dark Mode"/>
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.Context
+import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val layout = findViewById<LinearLayout>(R.id.layout)
+
+        val switchTheme = findViewById<Switch>(R.id.themeSwitch)
+
+        val tv = findViewById<TextView>(R.id.tvTheme)
+
+        val shared =
+            getSharedPreferences(
+                "ThemePref",
+                Context.MODE_PRIVATE
+            )
+
+        val isDark =
+            shared.getBoolean("darkMode", false)
+
+        if (isDark) {
+
+            layout.setBackgroundColor(Color.BLACK)
+
+            tv.setTextColor(Color.WHITE)
+
+            tv.text = "Dark Mode Enabled"
+
+            switchTheme.isChecked = true
+
+        } else {
+
+            layout.setBackgroundColor(Color.WHITE)
+
+            tv.setTextColor(Color.BLACK)
+
+            tv.text = "Light Mode Enabled"
+        }
+
+        switchTheme.setOnCheckedChangeListener { _, isChecked ->
+
+            val editor = shared.edit()
+
+            editor.putBoolean("darkMode", isChecked)
+
+            editor.apply()
+
+            recreate()
+        }
+    }
+}
+
+========================================================
+24) SHARE TEXT USING IMPLICIT INTENT
+========================================================
+
+Question:
+Create an Android application using Implicit Intent
+to share text content with other applications like
+WhatsApp or Gmail.
+
+Steps:
+1. Create Empty Views Activity
+2. Open activity_main.xml
+3. Add EditText and Button
+4. Open MainActivity.kt
+5. Use ACTION_SEND intent
+6. Share text to other applications
+7. Run the application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Message"/>
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share Text"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.madlab
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etMessage =
+            findViewById<EditText>(R.id.etMessage)
+
+        val btnShare =
+            findViewById<Button>(R.id.btnShare)
+
+        btnShare.setOnClickListener {
+
+            val intent = Intent(Intent.ACTION_SEND)
+
+            intent.type = "text/plain"
+
+            intent.putExtra(
+                Intent.EXTRA_TEXT,
+                etMessage.text.toString()
+            )
+
+            startActivity(
+                Intent.createChooser(
+                    intent,
+                    "Share Using"
+                )
+            )
+        }
+    }
+}
+
+========================================================
+1) LOGIN APPLICATION USING EXPLICIT INTENT
+========================================================
+
+Question:
+Create an Android application using Explicit Intent.
+Accept username and password in first activity and display
+welcome message in second activity.
+
+Steps:
+1. Open Android Studio
+2. Create Empty Views Activity
+3. Create SecondActivity
+4. Design XML files
+5. Pass username using Intent
+6. Display welcome message
+7. Run application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.explicitintent
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etUsername =
+            findViewById<EditText>(R.id.etUsername)
+
+        val btnLogin =
+            findViewById<Button>(R.id.btnLogin)
+
+        btnLogin.setOnClickListener {
+
+            val intent =
+                Intent(this, SecondActivity::class.java)
+
+            intent.putExtra(
+                "username",
+                etUsername.text.toString()
+            )
+
+            startActivity(intent)
+        }
+    }
+}
+
+activity_second.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"/>
+</LinearLayout>
+
+SecondActivity.kt
+--------------------------------------------------------
+
+package com.example.explicitintent
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val tv =
+            findViewById<TextView>(R.id.tvWelcome)
+
+        val username =
+            intent.getStringExtra("username")
+
+        tv.text = "Welcome " + username
+    }
+}
+
+AndroidManifest.xml
+--------------------------------------------------------
+
+<activity android:name=".SecondActivity"/>
+
+========================================================
+2) STUDENT DETAILS USING EXPLICIT INTENT
+========================================================
+
+Question:
+Create an Android application using Explicit Intent.
+Accept student name and USN in first activity and display
+the details in second activity.
+
+Steps:
+1. Create Empty Views Activity
+2. Create SecondActivity
+3. Design XML layouts
+4. Pass student details using Intent
+5. Display details in second activity
+6. Run application
+
+activity_main.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Name"/>
+
+    <EditText
+        android:id="@+id/etUSN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter USN"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+</LinearLayout>
+
+MainActivity.kt
+--------------------------------------------------------
+
+package com.example.explicitintent
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val etName =
+            findViewById<EditText>(R.id.etName)
+
+        val etUSN =
+            findViewById<EditText>(R.id.etUSN)
+
+        val btnSubmit =
+            findViewById<Button>(R.id.btnSubmit)
+
+        btnSubmit.setOnClickListener {
+
+            val intent =
+                Intent(this, SecondActivity::class.java)
+
+            intent.putExtra(
+                "name",
+                etName.text.toString()
+            )
+
+            intent.putExtra(
+                "usn",
+                etUSN.text.toString()
+            )
+
+            startActivity(intent)
+        }
+    }
+}
+
+activity_second.xml
+--------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"/>
+</LinearLayout>
+
+SecondActivity.kt
+--------------------------------------------------------
+
+package com.example.explicitintent
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val tv =
+            findViewById<TextView>(R.id.tvResult)
+
+        val name =
+            intent.getStringExtra("name")
+
+        val usn =
+            intent.getStringExtra("usn")
+
+        tv.text =
+            "Student Name: " + name +
+            "\nUSN: " + usn
+    }
+}
+
+AndroidManifest.xml
+--------------------------------------------------------
+
+<activity android:name=".SecondActivity"/>
+
+
+
+------------------------
+Create an Android application using Animation.
+Provide 5 buttons to apply different animations to an ImageView:
+1. Fade Animation
+2. Zoom Animation
+3. Rotate Animation
+4. Move Animation
+5. Blink Animation
+
+========================================================
+STEP BY STEP PROCEDURE
+========================================================
+
+STEP 1:
+Open Android Studio Dolphin 2021.3.1
+
+STEP 2:
+Create New Project
+-> Empty Views Activity
+-> Finish
+
+STEP 3:
+Open:
+res/layout/activity_main.xml
+
+STEP 4:
+Add ImageView and 5 Buttons
+
+STEP 5:
+Create anim folder
+
+How to create anim folder:
+1. Right click res
+2. New
+3. Android Resource Directory
+4. Resource Type = anim
+5. Click OK
+
+STEP 6:
+Inside anim folder create:
+1. fade.xml
+2. zoom.xml
+3. rotate.xml
+4. move.xml
+5. blink.xml
+
+STEP 7:
+Open MainActivity.kt
+
+STEP 8:
+Load animations using:
+AnimationUtils.loadAnimation()
+
+STEP 9:
+Apply animation using:
+startAnimation()
+
+STEP 10:
+Run the application
+
+========================================================
+activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
+        android:id="@+id/btnFade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fade Animation"/>
+
+    <Button
+        android:id="@+id/btnZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zoom Animation"/>
+
+    <Button
+        android:id="@+id/btnRotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotate Animation"/>
+
+    <Button
+        android:id="@+id/btnMove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Move Animation"/>
+
+    <Button
+        android:id="@+id/btnBlink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blink Animation"/>
+
+</LinearLayout>
+</ScrollView>
+
+========================================================
+res/anim/fade.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"/>
+
+========================================================
+res/anim/zoom.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromXScale="0.2"
+    android:fromYScale="0.2"
+    android:toXScale="1.0"
+    android:toYScale="1.0"
+    android:pivotX="50%"
+    android:pivotY="50%"/>
+
+========================================================
+res/anim/rotate.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:pivotX="50%"
+    android:pivotY="50%"/>
+
+========================================================
+res/anim/move.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="2000"
+    android:fromXDelta="0"
+    android:toXDelta="300"/>
+
+========================================================
+res/anim/blink.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromAlpha="0.0"
+    android:repeatCount="5"
+    android:repeatMode="reverse"
+    android:toAlpha="1.0"/>
+
+========================================================
+MainActivity.kt
+========================================================
+
+package com.example.animationapp
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.ImageView
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var imageView: ImageView
+
+    lateinit var fadeAnimation: Animation
+    lateinit var zoomAnimation: Animation
+    lateinit var rotateAnimation: Animation
+    lateinit var moveAnimation: Animation
+    lateinit var blinkAnimation: Animation
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        imageView = findViewById(R.id.imageView)
+
+        val btnFade =
+            findViewById<Button>(R.id.btnFade)
+
+        val btnZoom =
+            findViewById<Button>(R.id.btnZoom)
+
+        val btnRotate =
+            findViewById<Button>(R.id.btnRotate)
+
+        val btnMove =
+            findViewById<Button>(R.id.btnMove)
+
+        val btnBlink =
+            findViewById<Button>(R.id.btnBlink)
+
+        fadeAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.fade
+            )
+
+        zoomAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.zoom
+            )
+
+        rotateAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.rotate
+            )
+
+        moveAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.move
+            )
+
+        blinkAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.blink
+            )
+
+        btnFade.setOnClickListener {
+
+            imageView.startAnimation(fadeAnimation)
+        }
+
+        btnZoom.setOnClickListener {
+
+            imageView.startAnimation(zoomAnimation)
+        }
+
+        btnRotate.setOnClickListener {
+
+            imageView.startAnimation(rotateAnimation)
+        }
+
+        btnMove.setOnClickListener {
+
+            imageView.startAnimation(moveAnimation)
+        }
+
+        btnBlink.setOnClickListener {
+
+            imageView.startAnimation(blinkAnimation)
+        }
+    }
+}
