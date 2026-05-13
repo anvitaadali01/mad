@@ -2504,81 +2504,126 @@ class MainActivity : AppCompatActivity() {
 }
 
 ========================================================
-4) HUNGRY TO HAPPY COOKIE APP
+QUESTION
 ========================================================
 
-STEP 1:
-Create New Project
+Build the app shown below.
 
-STEP 2:
-Open activity_main.xml
+Users are initially presented with an "unhappy" character
+with the corresponding text:
+"I'm so hungry"
 
-Replace with:
+After clicking the button:
+"EAT COOKIE"
+
+the character becomes happy with corresponding text:
+"I'm so full"
+
+========================================================
+STEPS
+========================================================
+
+1. Open Android Studio Dolphin 2021.3.1
+
+2. Create New Project
+   -> Empty Views Activity
+
+3. Add two images inside:
+   res/drawable
+   - hungry.png
+   - full.png
+
+4. Open activity_main.xml
+
+5. Add:
+   - ImageView
+   - TextView
+   - Button
+
+6. Open MainActivity.kt
+
+7. Change image and text on button click
+
+8. Run the application
+
+========================================================
+activity_main.xml
+========================================================
 
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="20dp">
+    android:background="#B388FF">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/hungry"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I'm so hungry"
-        android:textSize="24sp"
-        android:layout_marginTop="20dp"/>
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:padding="16dp"/>
 
     <Button
-        android:id="@+id/btnEat"
+        android:id="@+id/btnCookie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EAT COOKIE"
-        android:layout_marginTop="20dp"/>
-
+        android:layout_marginStart="16dp"/>
 </LinearLayout>
 
---------------------------------------------------------
+========================================================
 MainActivity.kt
---------------------------------------------------------
+========================================================
 
 package com.example.cookieapp
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
-        val imageView = findViewById<ImageView>(R.id.imageView)
-        val textView = findViewById<TextView>(R.id.textView)
-        val btnEat = findViewById<Button>(R.id.btnEat)
+        val imageView =
+            findViewById<ImageView>(R.id.imageView)
 
-        btnEat.setOnClickListener {
+        val tvStatus =
+            findViewById<TextView>(R.id.tvStatus)
 
-            imageView.setImageResource(R.mipmap.ic_launcher)
+        val btnCookie =
+            findViewById<Button>(R.id.btnCookie)
 
-            textView.text = "I'm so full"
+        btnCookie.setOnClickListener {
 
-            btnEat.text = "DONE"
+            imageView.setImageResource(R.drawable.full)
+
+            tvStatus.text = "I'm so full"
+
+            btnCookie.text = "DONE"
         }
     }
 }
-
+--------------
 implement login and password using shared preferences, in the next run it should show the username and password
 
 <?xml version="1.0" encoding="utf-8"?>
