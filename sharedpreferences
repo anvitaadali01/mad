@@ -1,1 +1,114 @@
+#xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
 
+    <TextView
+        android:id="@+id/teamAScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/btnA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team A +1"/>
+
+    <TextView
+        android:id="@+id/teamBScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team B +1"/>
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:layout_marginTop="30dp"/>
+</LinearLayout>
+
+#kotlin
+package com.example.scorekeeper
+
+import android.content.Context
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var teamAText: TextView
+    private lateinit var teamBText: TextView
+    private var scoreA = 0
+    private var scoreB = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        teamAText = findViewById(R.id.teamAScore)
+        teamBText = findViewById(R.id.teamBScore)
+
+        val btnA = findViewById<Button>(R.id.btnA)
+        val btnB = findViewById<Button>(R.id.btnB)
+        val resetBtn = findViewById<Button>(R.id.resetBtn)
+
+        val sharedPref = getSharedPreferences("ScorePrefs", Context.MODE_PRIVATE)
+
+        // Load saved scores
+        scoreA = sharedPref.getInt("scoreA", 0)
+        scoreB = sharedPref.getInt("scoreB", 0)
+
+        updateUI()
+
+        btnA.setOnClickListener {
+            scoreA++
+            updateUI()
+        }
+
+        btnB.setOnClickListener {
+            scoreB++
+            updateUI()
+        }
+
+        resetBtn.setOnClickListener {
+            scoreA = 0
+            scoreB = 0
+            updateUI()
+        }
+    }
+
+    private fun updateUI() {
+        teamAText.text = scoreA.toString()
+        teamBText.text = scoreB.toString()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val sharedPref = getSharedPreferences("ScorePrefs", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
+        editor.putInt("scoreA", scoreA)
+        editor.putInt("scoreB", scoreB)
+        editor.apply()
+    }
+}
