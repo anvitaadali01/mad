@@ -3401,3 +3401,508 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+
+
+
+
+
+
+========================================================
+1) SPINNER + ARRAY ADAPTER + PROGRESSBAR
+========================================================
+
+Question:
+Create an Android application using Spinner, ArrayAdapter
+and ProgressBar.
+
+Display a list of courses using Spinner.
+When user selects a course and clicks button,
+show ProgressBar loading from 0 to 100 and
+display selected course in TextView.
+
+========================================================
+STEPS
+========================================================
+
+1. Open Android Studio Dolphin 2021.3.1
+2. Create Empty Views Activity
+3. Open activity_main.xml
+4. Add Spinner, Button, ProgressBar and TextView
+5. Open MainActivity.kt
+6. Create courses array
+7. Use ArrayAdapter with Spinner
+8. Load ProgressBar on button click
+9. Display selected course
+10. Run the application
+
+========================================================
+activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <Spinner
+        android:id="@+id/spinnerCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load Course"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:max="100"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingTop="20dp"/>
+</LinearLayout>
+
+========================================================
+MainActivity.kt
+========================================================
+
+package com.example.combinedapp
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        val spinner =
+            findViewById<Spinner>(R.id.spinnerCourse)
+
+        val btnLoad =
+            findViewById<Button>(R.id.btnLoad)
+
+        val progressBar =
+            findViewById<ProgressBar>(R.id.progressBar)
+
+        val tvResult =
+            findViewById<TextView>(R.id.tvResult)
+
+        val courses = arrayOf(
+            "Android",
+            "Python",
+            "Java",
+            "Kotlin"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            courses
+        )
+
+        spinner.adapter = adapter
+
+        btnLoad.setOnClickListener {
+
+            Thread {
+
+                for(i in 0..100) {
+
+                    Thread.sleep(30)
+
+                    runOnUiThread {
+
+                        progressBar.progress = i
+                    }
+                }
+
+            }.start()
+
+            tvResult.text =
+                "Selected Course: " +
+                spinner.selectedItem.toString()
+        }
+    }
+}
+
+========================================================
+2) CUSTOM ADAPTER + SPINNER + PROGRESSBAR
+========================================================
+
+Question:
+Create an Android application using Custom Adapter,
+Spinner and ProgressBar.
+
+Display employee names using Spinner.
+On button click show loading ProgressBar and
+display employee details in ListView using Custom Adapter.
+
+========================================================
+STEPS
+========================================================
+
+1. Create Empty Views Activity
+2. Add Spinner, Button, ProgressBar and ListView
+3. Create row XML layout
+4. Create Employee data class
+5. Create EmployeeAdapter class
+6. Use Spinner with ArrayAdapter
+7. Load ProgressBar on button click
+8. Display employees using Custom Adapter
+9. Run application
+
+========================================================
+activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Spinner
+        android:id="@+id/spinnerEmployee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Employees"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:max="100"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+
+========================================================
+employee_row.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingLeft="10dp"/>
+</LinearLayout>
+
+========================================================
+Employee.kt
+========================================================
+
+package com.example.combinedapp
+
+data class Employee(
+    val image:Int,
+    val name:String
+)
+
+========================================================
+EmployeeAdapter.kt
+========================================================
+
+package com.example.combinedapp
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
+
+class EmployeeAdapter(
+    context: Context,
+    var employees:ArrayList<Employee>
+):ArrayAdapter<Employee>(context,0,employees){
+
+    override fun getView(
+        position:Int,
+        convertView:View?,
+        parent:ViewGroup
+    ):View{
+
+        val view = LayoutInflater.from(context)
+            .inflate(R.layout.employee_row,parent,false)
+
+        val image =
+            view.findViewById<ImageView>(R.id.imageView)
+
+        val name =
+            view.findViewById<TextView>(R.id.tvName)
+
+        val employee = employees[position]
+
+        image.setImageResource(employee.image)
+        name.text = employee.name
+
+        return view
+    }
+}
+
+========================================================
+MainActivity.kt
+========================================================
+
+package com.example.combinedapp
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        val spinner =
+            findViewById<Spinner>(R.id.spinnerEmployee)
+
+        val btnShow =
+            findViewById<Button>(R.id.btnShow)
+
+        val progressBar =
+            findViewById<ProgressBar>(R.id.progressBar)
+
+        val listView =
+            findViewById<ListView>(R.id.listView)
+
+        val names = arrayOf(
+            "Rahul",
+            "Sneha",
+            "Anshika"
+        )
+
+        val spinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            names
+        )
+
+        spinner.adapter = spinnerAdapter
+
+        btnShow.setOnClickListener {
+
+            Thread {
+
+                for(i in 0..100){
+
+                    Thread.sleep(20)
+
+                    runOnUiThread {
+
+                        progressBar.progress = i
+                    }
+                }
+
+            }.start()
+
+            val employees = arrayListOf(
+
+                Employee(
+                    R.mipmap.ic_launcher,
+                    spinner.selectedItem.toString()
+                )
+            )
+
+            val adapter =
+                EmployeeAdapter(this,employees)
+
+            listView.adapter = adapter
+        }
+    }
+}
+
+========================================================
+3) SPINNER + ARRAY ADAPTER + LISTVIEW + PROGRESSBAR
+========================================================
+
+Question:
+Create an Android application using Spinner,
+ArrayAdapter, ListView and ProgressBar.
+
+Display categories in Spinner.
+When user selects category and clicks button,
+show ProgressBar and display items in ListView.
+
+========================================================
+STEPS
+========================================================
+
+1. Create Empty Views Activity
+2. Add Spinner, Button, ProgressBar and ListView
+3. Use ArrayAdapter with Spinner and ListView
+4. Load ProgressBar
+5. Display selected category items
+6. Run application
+
+========================================================
+activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btnDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display Items"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:max="100"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
+
+========================================================
+MainActivity.kt
+========================================================
+
+package com.example.combinedapp
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        val spinner =
+            findViewById<Spinner>(R.id.spinnerCategory)
+
+        val btnDisplay =
+            findViewById<Button>(R.id.btnDisplay)
+
+        val progressBar =
+            findViewById<ProgressBar>(R.id.progressBar)
+
+        val listView =
+            findViewById<ListView>(R.id.listView)
+
+        val categories = arrayOf(
+            "Fruits",
+            "Languages",
+            "Countries"
+        )
+
+        val spinnerAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            categories
+        )
+
+        spinner.adapter = spinnerAdapter
+
+        btnDisplay.setOnClickListener {
+
+            Thread {
+
+                for(i in 0..100){
+
+                    Thread.sleep(20)
+
+                    runOnUiThread {
+
+                        progressBar.progress = i
+                    }
+                }
+
+            }.start()
+
+            val selected =
+                spinner.selectedItem.toString()
+
+            val items = when(selected){
+
+                "Fruits" ->
+                    arrayOf("Apple","Mango","Orange")
+
+                "Languages" ->
+                    arrayOf("Java","Python","Kotlin")
+
+                else ->
+                    arrayOf("India","Japan","USA")
+            }
+
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_list_item_1,
+                items
+            )
+
+            listView.adapter = adapter
+        }
+    }
+}
