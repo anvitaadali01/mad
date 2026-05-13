@@ -3028,3 +3028,376 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+
+========================================================
+1) CANVAS DRAWING WITH ROTATE ANIMATION
+========================================================
+
+Question:
+Create an Android application to draw custom shapes on Canvas
+and apply Rotate Animation to the drawing when button is clicked.
+
+Draw:
+1. Circle
+2. Rectangle
+3. Line
+
+Apply Rotate Animation using Android Animation.
+
+========================================================
+STEPS
+========================================================
+
+1. Open Android Studio Dolphin 2021.3.1
+
+2. Create New Project
+   -> Empty Views Activity
+
+3. Open activity_main.xml
+
+4. Add FrameLayout and Button
+
+5. Create a new Kotlin Class/File
+   Name: MyCanvas
+   Type: Class
+
+6. Create anim folder:
+   res -> New -> Android Resource Directory
+   Resource Type = anim
+
+7. Inside anim folder create:
+   rotate.xml
+
+8. Open MainActivity.kt
+
+9. Add MyCanvas inside FrameLayout
+
+10. Load animation using:
+    AnimationUtils.loadAnimation()
+
+11. Apply animation on Canvas View
+
+12. Run the application
+
+========================================================
+activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"/>
+
+    <Button
+        android:id="@+id/btnRotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rotate Animation"/>
+</LinearLayout>
+
+========================================================
+MyCanvas.kt
+========================================================
+
+package com.example.canvasanimation
+
+import android.content.Context
+import android.graphics.*
+import android.view.View
+
+class MyCanvas(context: Context) : View(context) {
+
+    override fun onDraw(canvas: Canvas) {
+
+        super.onDraw(canvas)
+
+        val paint = Paint()
+
+        paint.color = Color.RED
+        paint.style = Paint.Style.FILL
+
+        canvas.drawCircle(300f,200f,120f,paint)
+
+        paint.color = Color.BLUE
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 8f
+
+        canvas.drawRect(100f,400f,500f,650f,paint)
+
+        paint.color = Color.GREEN
+        paint.strokeWidth = 10f
+
+        canvas.drawLine(100f,750f,700f,750f,paint)
+    }
+}
+
+========================================================
+res/anim/rotate.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<rotate
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:duration="2000"
+    android:pivotX="50%"
+    android:pivotY="50%"/>
+
+========================================================
+MainActivity.kt
+========================================================
+
+package com.example.canvasanimation
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.FrameLayout
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        val frameLayout =
+            findViewById<FrameLayout>(R.id.frameLayout)
+
+        val btnRotate =
+            findViewById<Button>(R.id.btnRotate)
+
+        val myCanvas = MyCanvas(this)
+
+        frameLayout.addView(myCanvas)
+
+        val rotateAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.rotate
+            )
+
+        btnRotate.setOnClickListener {
+
+            myCanvas.startAnimation(rotateAnimation)
+        }
+    }
+}
+
+========================================================
+2) CANVAS DRAWING WITH FADE AND ZOOM ANIMATION
+========================================================
+
+Question:
+Create an Android application to draw shapes on Canvas
+and apply Fade and Zoom animations using buttons.
+
+Draw:
+1. Circle
+2. Rectangle
+3. Text
+
+Apply:
+1. Fade Animation
+2. Zoom Animation
+
+========================================================
+STEPS
+========================================================
+
+1. Open Android Studio
+
+2. Create Empty Views Activity
+
+3. Open activity_main.xml
+
+4. Add FrameLayout and Buttons
+
+5. Create MyCanvas.kt
+
+6. Create anim folder:
+   res -> New -> Android Resource Directory
+   Resource Type = anim
+
+7. Create:
+   fade.xml
+   zoom.xml
+
+8. Load animations in MainActivity.kt
+
+9. Apply animations on Canvas View
+
+10. Run application
+
+========================================================
+activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"/>
+
+    <Button
+        android:id="@+id/btnFade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fade Animation"/>
+
+    <Button
+        android:id="@+id/btnZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zoom Animation"/>
+</LinearLayout>
+
+========================================================
+MyCanvas.kt
+========================================================
+
+package com.example.canvasanimation
+
+import android.content.Context
+import android.graphics.*
+import android.view.View
+
+class MyCanvas(context: Context) : View(context) {
+
+    override fun onDraw(canvas: Canvas) {
+
+        super.onDraw(canvas)
+
+        val paint = Paint()
+
+        paint.color = Color.MAGENTA
+        paint.style = Paint.Style.FILL
+
+        canvas.drawCircle(300f,200f,120f,paint)
+
+        paint.color = Color.BLACK
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 8f
+
+        canvas.drawRect(100f,400f,500f,650f,paint)
+
+        paint.textSize = 60f
+        paint.style = Paint.Style.FILL
+
+        canvas.drawText(
+            "Canvas Animation",
+            120f,
+            850f,
+            paint
+        )
+    }
+}
+
+========================================================
+res/anim/fade.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<alpha
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"
+    android:duration="2000"/>
+
+========================================================
+res/anim/zoom.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<scale
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXScale="0.2"
+    android:fromYScale="0.2"
+    android:toXScale="1.0"
+    android:toYScale="1.0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:duration="2000"/>
+
+========================================================
+MainActivity.kt
+========================================================
+
+package com.example.canvasanimation
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.FrameLayout
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+        val frameLayout =
+            findViewById<FrameLayout>(R.id.frameLayout)
+
+        val btnFade =
+            findViewById<Button>(R.id.btnFade)
+
+        val btnZoom =
+            findViewById<Button>(R.id.btnZoom)
+
+        val myCanvas = MyCanvas(this)
+
+        frameLayout.addView(myCanvas)
+
+        val fadeAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.fade
+            )
+
+        val zoomAnimation =
+            AnimationUtils.loadAnimation(
+                this,
+                R.anim.zoom
+            )
+
+        btnFade.setOnClickListener {
+
+            myCanvas.startAnimation(fadeAnimation)
+        }
+
+        btnZoom.setOnClickListener {
+
+            myCanvas.startAnimation(zoomAnimation)
+        }
+    }
+}
+
