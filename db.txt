@@ -1,4 +1,4 @@
-#main activiy txt
+#main activity kt
 
 package com.example.dbsqlite
 
