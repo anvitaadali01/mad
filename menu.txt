@@ -1,0 +1,353 @@
+
+PROGRAM 1: CREATE AN APPLICATION TO DEMONSTRATE OPTIONS MENU IN ANDROID.
+
+AIM:
+Create an Android application with an Options Menu containing:
+1. Show Toast
+2. Change Text Color
+3. Exit
+
+When user selects menu items, perform corresponding actions.
+
+========================================================
+FILE 1: res/menu/options_menu.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/toast"
+        android:title="Show Toast"/>
+
+    <item
+        android:id="@+id/color"
+        android:title="Change Color"/>
+
+    <item
+        android:id="@+id/exit"
+        android:title="Exit"/>
+
+</menu>
+
+========================================================
+FILE 2: res/layout/activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Options Menu Example"
+        android:textSize="24sp"/>
+
+</LinearLayout>
+
+========================================================
+FILE 3: MainActivity.kt
+========================================================
+
+package com.example.optionsmenu
+
+import android.graphics.Color
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var textView: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        textView = findViewById(R.id.textView)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId) {
+
+            R.id.toast -> {
+                Toast.makeText(this, "Toast Selected", Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.color -> {
+                textView.setTextColor(Color.RED)
+            }
+
+            R.id.exit -> {
+                finish()
+            }
+        }
+
+        return true
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PROGRAM 2: CREATE AN APPLICATION TO DEMONSTRATE CONTEXT MENU IN ANDROID.
+
+AIM:
+Create an Android application that displays a Context Menu on long pressing a TextView.
+
+Menu items:
+1. Red Color
+2. Green Color
+
+Selecting menu items should change text color.
+
+========================================================
+FILE 1: res/menu/context_menu.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/red"
+        android:title="Red Color"/>
+
+    <item
+        android:id="@+id/green"
+        android:title="Green Color"/>
+
+</menu>
+
+========================================================
+FILE 2: res/layout/activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Long Press Me"
+        android:textSize="24sp"/>
+
+</LinearLayout>
+
+========================================================
+FILE 3: MainActivity.kt
+========================================================
+
+package com.example.contextmenu
+
+import android.graphics.Color
+import android.os.Bundle
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var textView: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        textView = findViewById(R.id.textView)
+
+        registerForContextMenu(textView)
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+
+        super.onCreateContextMenu(menu, v, menuInfo)
+
+        menuInflater.inflate(R.menu.context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId) {
+
+            R.id.red -> {
+                textView.setTextColor(Color.RED)
+            }
+
+            R.id.green -> {
+                textView.setTextColor(Color.GREEN)
+            }
+        }
+
+        return true
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PROGRAM 3: CREATE AN APPLICATION TO DEMONSTRATE POPUP MENU IN ANDROID.
+
+AIM:
+Create an Android application that displays a Popup Menu when button is clicked.
+
+Menu items:
+1. Show Toast
+2. Change Text
+
+Perform corresponding actions on selection.
+
+========================================================
+FILE 1: res/menu/popup_menu.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/toast"
+        android:title="Show Toast"/>
+
+    <item
+        android:id="@+id/change"
+        android:title="Change Text"/>
+
+</menu>
+
+========================================================
+FILE 2: res/layout/activity_main.xml
+========================================================
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Popup Menu Example"
+        android:textSize="24sp"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Popup"/>
+</LinearLayout>
+
+========================================================
+FILE 3: MainActivity.kt
+========================================================
+
+package com.example.popupmenu
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var button: Button
+    lateinit var textView: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        button = findViewById(R.id.button)
+        textView = findViewById(R.id.textView)
+
+        button.setOnClickListener {
+
+            val popup = PopupMenu(this, button)
+
+            popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
+
+            popup.setOnMenuItemClickListener {
+
+                when(it.itemId) {
+
+                    R.id.toast -> {
+
+                        Toast.makeText(this, "Toast Selected", Toast.LENGTH_SHORT).show()
+
+                        true
+                    }
+
+                    R.id.change -> {
+
+                        textView.text = "Text Changed"
+
+                        true
+                    }
+
+                    else -> true
+                }
+            }
+
+            popup.show()
+        }
+    }
+}
