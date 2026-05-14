@@ -1,1 +1,11 @@
-pls put the code 
+
+Method 1
+-> Pip install madshell
+-> Madlab
+
+Method 2
+-> cd ..
+-> curl.exe -L "https://github.com/aquaclasher/studio/archive/refs/heads/master.zip" -o repo.zip
+-> tar -xf repo.zip
+
+pls put code after this 
