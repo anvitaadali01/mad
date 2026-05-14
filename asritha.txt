@@ -77,3 +77,89 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+
+
+or or 
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Programming Language"
+        android:inputType="text"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Check Match" />
+
+</LinearLayout>
+
+--kt--
+
+package com.example.autocompleteapp
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val autoText = findViewById<AutoCompleteTextView>(R.id.autoText)
+        val btnCheck = findViewById<Button>(R.id.btnCheck)
+
+        val languages = arrayOf(
+            "Java",
+            "Kotlin",
+            "Python",
+            "C",
+            "C++",
+            "JavaScript"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1,
+            languages
+        )
+
+        autoText.setAdapter(adapter)
+        autoText.threshold = 1
+
+        btnCheck.setOnClickListener {
+
+            val enteredText = autoText.text.toString()
+
+            if (languages.contains(enteredText)) {
+                Toast.makeText(
+                    this,
+                    "Language Matched Successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                autoText.error = "Invalid Language"
+            }
+        }
+    }
+}
