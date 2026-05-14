@@ -1,0 +1,255 @@
+#create animation files res/anim/
+fadein.xml
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="800"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"/>
+fadeout.xml
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="800"
+    android:fromAlpha="1.0"
+    android:toAlpha="0.0"/>
+blink.xml
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="300"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"
+    android:repeatMode="reverse"
+    android:repeatCount="5"/>
+zoomin.xml
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromXScale="0.5"
+    android:toXScale="1.5"
+    android:fromYScale="0.5"
+    android:toYScale="1.5"
+    android:pivotX="50%"
+    android:pivotY="50%"/>
+zoomout.xml
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromXScale="1.5"
+    android:toXScale="0.5"
+    android:fromYScale="1.5"
+    android:toYScale="0.5"
+    android:pivotX="50%"
+    android:pivotY="50%"/>
+rotate.xml
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="800"
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:pivotX="50%"
+    android:pivotY="50%"/>
+slideup.xml
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromYDelta="100%"
+    android:toYDelta="0%"/>
+slidedown.xml
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromYDelta="0%"
+    android:toYDelta="100%"/>
+
+
+# main KT
+package com.example.animationapp
+
+import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var text: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        text = findViewById(R.id.textView)
+
+        val fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        val fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+        val blink = AnimationUtils.loadAnimation(this, R.anim.blink)
+        val zoomIn = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+        val zoomOut = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
+        val rotate = AnimationUtils.loadAnimation(this, R.anim.rotate)
+        val slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up)
+        val slideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down)
+
+        findViewById<Button>(R.id.fade_in).setOnClickListener {
+            text.startAnimation(fadeIn)
+        }
+
+        findViewById<Button>(R.id.fade_out).setOnClickListener {
+            text.startAnimation(fadeOut)
+        }
+
+        findViewById<Button>(R.id.zoom_in).setOnClickListener {
+            text.startAnimation(zoomIn)
+        }
+
+        findViewById<Button>(R.id.zoom_out).setOnClickListener {
+            text.startAnimation(zoomOut)
+        }
+
+        findViewById<Button>(R.id.slide_up).setOnClickListener {
+            text.startAnimation(slideUp)
+        }
+
+        findViewById<Button>(R.id.slide_down).setOnClickListener {
+            text.startAnimation(slideDown)
+        }
+
+        findViewById<Button>(R.id.bounce).setOnClickListener {
+            text.startAnimation(blink)   // using blink as bounce alternative
+        }
+
+        findViewById<Button>(R.id.rotate).setOnClickListener {
+            text.startAnimation(rotate)
+        }
+
+        // 🔥 CROSSFADE (special case)
+        text.setOnClickListener {
+            text.animate().alpha(0f).setDuration(500).withEndAction {
+                text.animate().alpha(1f).duration = 500
+            }
+        }
+    }
+}
+
+
+#activitymain.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Center Text -->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CodeAndroid"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Bottom Button Container -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Row 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/fade_in"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fade In"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/fade_out"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fade Out"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+        <!-- Row 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/zoom_in"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Zoom In"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/zoom_out"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Zoom Out"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+        <!-- Row 3 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/slide_down"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Slide Down"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/slide_up"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Slide Up"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+        <!-- Row 4 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bounce"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Blink"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/rotate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rotate"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
