@@ -30,6 +30,14 @@ xml
         android:layout_marginTop="20dp"
         android:text="Get Greeting" />
 
+    <TextView
+        android:id="@+id/tvOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
 </LinearLayout>
 
 --kt--
@@ -40,8 +48,8 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -53,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         val etName = findViewById<EditText>(R.id.etName)
         val timePicker = findViewById<TimePicker>(R.id.timePicker)
         val btnGreeting = findViewById<Button>(R.id.btnGreeting)
+        val tvOutput = findViewById<TextView>(R.id.tvOutput)
 
         btnGreeting.setOnClickListener {
 
@@ -70,11 +79,7 @@ class MainActivity : AppCompatActivity() {
                 else -> "Good Evening"
             }
 
-            Toast.makeText(
-                this,
-                "$greeting $name",
-                Toast.LENGTH_SHORT
-            ).show()
+            tvOutput.text = "$greeting $name"
         }
     }
 }
