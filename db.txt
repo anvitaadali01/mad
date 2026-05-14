@@ -1,0 +1,111 @@
+#main activiy txt
+
+package com.example.dbsqlite
+
+import android.os.Bundle
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import dbController.dbController
+
+class MainActivity : AppCompatActivity() {
+
+    private var fname: EditText? = null
+    private var lname: EditText? = null
+    private var list: TextView? = null
+    private var dbc: dbController? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        fname = findViewById(R.id.fname)
+        lname = findViewById(R.id.lname)
+        list = findViewById(R.id.textView)
+        dbc = dbController(this, "", null, 1)
+    }
+
+    fun btn_click(v: View) {
+        when (v.id) {
+            R.id.btnadd -> dbc?.insert(
+                fname!!.text.toString(),
+                lname!!.text.toString()
+            )
+            R.id.btndel -> dbc?.delete(fname!!.text.toString())
+            R.id.btnupd -> {
+                val dialog = AlertDialog.Builder(this@MainActivity)
+                dialog.setTitle("Enter Firstname")
+                val newFname = EditText(this)
+                dialog.setView(newFname)
+                dialog.setPositiveButton("OK") { _, _ ->
+                    dbc?.update(
+                        fname!!.text.toString(),
+                        newFname.text.toString()
+                    )
+                }
+                dialog.show()
+            }
+            R.id.btnlis -> dbc?.list(list)
+        }
+    }
+}
+
+
+#db controller kt
+package dbController
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.widget.TextView
+
+class dbController(
+    context: Context,
+    name: String,
+    factory: SQLiteDatabase.CursorFactory?,
+    version: Int
+) : SQLiteOpenHelper(context, "std.db", factory, version) {
+
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL("CREATE TABLE STUDENT(FNAME TEXT, LNAME TEXT);")
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, i: Int, i1: Int) {
+        db.execSQL("DROP TABLE IF EXISTS STUDENT")
+        onCreate(db)
+    }
+
+    fun insert(a: String, b: String) {
+        val cv = ContentValues().apply {
+            put("FNAME", a)
+            put("LNAME", b)
+        }
+        this.writableDatabase.insert("STUDENT", null, cv)
+    }
+
+    fun delete(a: String) {
+        this.writableDatabase.delete("STUDENT", "FNAME = ?", arrayOf(a))
+    }
+
+    fun update(a: String, aa: String) {
+        val cv = ContentValues().apply {
+            put("FNAME", aa)
+        }
+        this.writableDatabase.update("STUDENT", cv, "FNAME = ?", arrayOf(a))
+    }
+
+    fun list(tv: TextView?) {
+        tv?.text = ""
+        val c = this.readableDatabase.rawQuery("SELECT * FROM STUDENT", null)
+        try {
+            while (c.moveToNext()) {
+                tv?.append("${c.getString(0)} ${c.getString(1)}\n")
+            }
+        } finally {
+            c.close()
+        }
+    }
+}
